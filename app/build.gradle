@@ -56,7 +56,12 @@ application {
 }
 
 tasks.named('test') {
+     doFirst {
+        println "Rodando os testes no ambiente: " + System.getProperty('env', 'qa')
+    }
+    
     useJUnitPlatform()
+    systemProperty 'env', System.getProperty('env', 'qa')
     systemProperty 'allure.results.directory', "$buildDir/allure-results"
     testLogging {
         events 'passed', 'failed', 'skipped'
