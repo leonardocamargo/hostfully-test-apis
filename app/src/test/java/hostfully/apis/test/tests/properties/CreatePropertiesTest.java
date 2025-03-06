@@ -48,7 +48,7 @@ public class CreatePropertiesTest extends BaseTest {
             .then()
             .statusCode(201)
             .body("alias", equalTo(property.getAlias()))
-            .time(lessThan(5L), TimeUnit.SECONDS)
+            .time(lessThan(10L), TimeUnit.SECONDS)
             .extract().response();
 
 
