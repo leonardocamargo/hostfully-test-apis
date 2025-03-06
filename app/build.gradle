@@ -1,0 +1,70 @@
+plugins {
+    id 'application'
+    id 'io.qameta.allure' version '2.9.6'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JUnit 5
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.9.3'
+    
+    // Rest Assured
+    implementation 'io.rest-assured:rest-assured:5.5.1'
+    
+    // Hamcrest
+    testImplementation 'org.hamcrest:hamcrest:3.0'
+    
+    // Allure REST Assured
+    testImplementation 'io.qameta.allure:allure-rest-assured:2.13.8'
+    
+    // Guava
+    implementation 'com.google.guava:guava:31.1-jre'
+    
+    // Jackson Annotations
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
+    testImplementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
+    
+    // Lombok – tente a versão 1.18.28 (ou a mais recente disponível)
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    testCompileOnly 'org.projectlombok:lombok:1.18.28'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.fork = true
+    options.forkOptions.jvmArgs += [
+        "--add-exports", "jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED",
+        "--add-opens", "jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED",
+        "--add-opens", "jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
+        "--add-opens", "jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED"
+    ]
+}
+
+application {
+    mainClass = 'hostfully.apis.App'
+}
+
+tasks.named('test') {
+     doFirst {
+        println "Rodando os testes no ambiente: " + System.getProperty('env', 'qa')
+    }
+    
+    useJUnitPlatform()
+    systemProperty 'env', System.getProperty('env', 'qa')
+    systemProperty 'allure.results.directory', "$buildDir/allure-results"
+    testLogging {
+        events 'passed', 'failed', 'skipped'
+        showStandardStreams = true
+    }
+}
