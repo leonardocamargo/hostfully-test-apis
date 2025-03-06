@@ -1,0 +1,25 @@
+name: Automation Team CI - API Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'Environment to run tests (ex: staging, qa, dev)'
+        required: true
+        default: 'qa'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Run tests with Gradle
+        run: ./gradlew clean test -Denv=${{ github.event.inputs.env }}
