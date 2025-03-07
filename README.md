@@ -56,6 +56,8 @@ hostfully-test-apis/
 
 │   │       └── java/         # Automated tests
 
+│   │           ├── api/     # Apis file to reduce code duplication, where we call the apis
+
 │   │           ├── base/     # BaseTest class with shared configurations
 
 │   │           ├── pojos/    # POJOs to map JSON responses
@@ -68,6 +70,9 @@ hostfully-test-apis/
 │   └── build/                # Gradle build outputs (including allure-results)
 
 ├── src/test/resources/       # Properties files (qa.properties, dev.properties, etc.)
+
+│    ├── schemas/             # json schemas to match with responses
+
 
 ├── .github/
 
@@ -119,7 +124,9 @@ After running tests, Allure collects test results (stored in app/build/allure-re
 #### Workflow Outline:
 
 Pre-conditions Job: Sets up the environment and JDK.
+
 Test Job: Runs tests, generates Allure results, and uploads them as artifacts.
+
 Deploy Job: Downloads the artifacts, builds the Allure report (with history if configured), and deploys it to GitHub Pages.
 Once deployed, the report is accessible at:
 
