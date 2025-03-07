@@ -8,28 +8,15 @@ repositories {
 }
 
 dependencies {
-    // JUnit 5
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.9.3'
     testImplementation 'org.slf4j:slf4j-nop:1.7.36'
-
-    // Rest Assured
     implementation 'io.rest-assured:rest-assured:5.5.1'
-    
-    // Hamcrest
     testImplementation 'org.hamcrest:hamcrest:3.0'
-    
-    // Allure REST Assured
     testImplementation 'io.qameta.allure:allure-rest-assured:2.13.8'
-    
-    // Guava
     implementation 'com.google.guava:guava:31.1-jre'
-    
-    // Jackson Annotations
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
     testImplementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.2'
-    
-    // Lombok 
     compileOnly 'org.projectlombok:lombok:1.18.28'
     annotationProcessor 'org.projectlombok:lombok:1.18.28'
     testCompileOnly 'org.projectlombok:lombok:1.18.28'
@@ -56,11 +43,15 @@ application {
     mainClass = 'hostfully.apis.App'
 }
 
+allure {
+    autoconfigure = true
+    aspectjweaver = true
+}
+
 tasks.named('test') {
-     doFirst {
+    doFirst {
         println "Running api tests on: " + System.getProperty('env', 'qa')
     }
-
     useJUnitPlatform()
     systemProperty 'env', System.getProperty('env', 'qa')
     systemProperty 'allure.results.directory', "$buildDir/allure-results"
@@ -68,4 +59,8 @@ tasks.named('test') {
         events 'passed', 'failed', 'skipped'
         showStandardStreams = true
     }
+}
+
+tasks.allureReport {
+    dependsOn tasks.test
 }

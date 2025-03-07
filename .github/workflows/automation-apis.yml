@@ -41,17 +41,15 @@ jobs:
           distribution: 'temurin'
           
       - name: Run Tests
-        run: ./gradlew clean test -Denv=$ENV
-
-      - name: Generate Allure Report
-        if: always()
-        run: ./gradlew allureReport
+        run: |
+          echo "Executing tests on: $ENV"
+          ./gradlew clean test -Denv=$ENV
 
       - name: Upload Allure Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report
+          name: allure-results
           path: app/build/allure-results
 
   deploy:
@@ -60,18 +58,32 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout Code
+      - name: Checkout gh-pages Branch (for Allure History)
         uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
+        if: always()
 
-      - name: Download Allure Report
+      - name: Download Allure Results Artifact
+        if: always()
         uses: actions/download-artifact@v4
         with:
-          name: allure-report
+          name: allure-results
           path: app/build/allure-results
 
-      - name: Deploy Allure Report to GitHub Pages
+      - name: Build Allure Report with History
+        if: always()
+        uses: simple-elf/allure-report-action@v1.7
+        with:
+          gh_pages: gh-pages
+          allure_history: allure-history
+          allure_results: app/build/allure-results
+
+      - name: Publish Allure Report to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: app/build/allure-results
+          publish_branch: gh-pages
+          publish_dir: allure-history
