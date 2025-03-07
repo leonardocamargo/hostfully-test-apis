@@ -138,4 +138,10 @@ For instance, if your GitHub username is leonardocamargo and your repository is 
 https://leonardocamargo.github.io/hostfully-test-apis/
 ```
 
+#### Next steps
 
+- Run with docker container
+- send data to new relic
+- jira integration (create ticket if test fails)
+- add a logs library
+  
