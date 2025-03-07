@@ -7,6 +7,7 @@ import static org.hamcrest.number.OrderingComparison.lessThan;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 import hostfully.apis.test.api.PropertiesApi;
@@ -15,6 +16,7 @@ import hostfully.apis.test.pojos.Properties;
 import hostfully.apis.test.utils.AliasUtils;
 import hostfully.apis.test.utils.CustomTestWatcher;
 import hostfully.apis.test.utils.DateUtils;
+import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.*;
 
@@ -34,7 +36,6 @@ public class CreatePropertiesTest extends BaseTest {
     public void createPropertySuccess(){
 
         alias = new AliasUtils().generateRandomAlias();
-        dateNow = new DateUtils().getCurrentDate();
         username = envConfig.getUsername();
         password = envConfig.getPassword();
 
@@ -67,7 +68,6 @@ public class CreatePropertiesTest extends BaseTest {
     public void createPropertyDifferentCountryCode(){
 
         alias = new AliasUtils().generateRandomAlias();
-        dateNow = new DateUtils().getCurrentDate();
         username = envConfig.getUsername();
         password = envConfig.getPassword();
 
@@ -100,7 +100,6 @@ public class CreatePropertiesTest extends BaseTest {
     public void attemptCreatePropertyAliasAlreadyExisted(){
 
         alias = new AliasUtils().generateRandomAlias();
-        dateNow = new DateUtils().getCurrentDate();
         username = envConfig.getUsername();
         password = envConfig.getPassword();
 
@@ -131,7 +130,6 @@ public class CreatePropertiesTest extends BaseTest {
     public void attemptCreatePropertyInvalidCountryCode(){
 
         alias = new AliasUtils().generateRandomAlias();
-        dateNow = new DateUtils().getCurrentDate();
         username = envConfig.getUsername();
         password = envConfig.getPassword();
 
@@ -157,12 +155,11 @@ public class CreatePropertiesTest extends BaseTest {
     })
     public void attemptCreatePropertyWithoutAlias(){
 
-        dateNow = new DateUtils().getCurrentDate();
         username = envConfig.getUsername();
         password = envConfig.getPassword();
 
     
-        Properties property = new Properties(null, "TEST_CODE");
+        Properties property = new Properties(alias, "US");
         PropertiesApi propertiesApi =  new PropertiesApi(requestSpec);
         
         Response response = propertiesApi.createProperty(property, username, password);
@@ -175,6 +172,62 @@ public class CreatePropertiesTest extends BaseTest {
             .body("errors[0].defaultMessage", equalTo("Property alias is required"))
             .time(lessThan(10L), TimeUnit.SECONDS)
             .extract().response();
+    }
+
+
+    @Test
+    @DisplayName("Hostfully APis: Attempt to create a Property with invalid credentials")
+    @Tags({
+        @Tag("properties"), @Tag("sanity"), @Tag("regression")
+    })
+    public void attemptCreatePropertyInvalidCredentials(){
+
+        alias = new AliasUtils().generateRandomAlias();
+        username = "test";
+        password = "test";
+
+    
+        Properties property = new Properties(alias, "US");
+        PropertiesApi propertiesApi =  new PropertiesApi(requestSpec);
+        
+        Response response = propertiesApi.createProperty(property, username, password);
+
+        response.then()
+            .statusCode(401)
+            .body("exception", equalTo("Bad credentials"))
+            .body("error", equalTo("Unauthorized"))
+            .body("message", equalTo("Error while authenticating your access"))
+            .time(lessThan(10L), TimeUnit.SECONDS)
+            .extract().response();
+    }
+
+    @Test
+    @DisplayName("Hostfully APis: Attempt to create a property invalid URL")
+    @Tags({
+        @Tag("properties"), @Tag("sanity")
+    })
+    public void attemptCreatePropertyInvalidURL(){
+
+        alias = new AliasUtils().generateRandomAlias();
+        username = envConfig.getUsername();
+        password = envConfig.getPassword();
+
+        Properties property = new Properties(alias, "US");
+        PropertiesApi propertiesApi =  new PropertiesApi(requestSpec);
+
+        Response response = RestAssured.given()
+            .spec(requestSpec)
+            .auth().preemptive().basic(username, password)
+            .body(property)
+            .when()
+            .post("/propertiesss")
+            .then()
+            .statusCode(404)
+            .body("error", equalTo("Not Found"))
+            .body("status", equalTo(404))
+            .extract().response();
+
+
     }
     
 }
