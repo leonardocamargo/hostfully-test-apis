@@ -44,4 +44,16 @@ public class PropertiesApi {
             .then()
             .extract().response();
     }
+
+
+    public Response getProperties(String propertyId, String username, String password) {
+        return given()
+            .spec(requestSpec)
+            .auth().preemptive().basic(username, password)
+            .pathParam("id", propertyId)
+            .when()
+            .post("/properties")
+            .then()
+            .extract().response();
+    }
 }
