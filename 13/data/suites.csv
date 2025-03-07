@@ -1,0 +1,2 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Fri Mar 07 00:58:39 GMT 2025","Fri Mar 07 00:58:42 GMT 2025","3560","","hostfully.apis.test.tests.properties.CreatePropertiesTest","","hostfully.apis.test.tests.properties.CreatePropertiesTest","createPropertySuccess","Hostfully APis: Create a property with success",""
