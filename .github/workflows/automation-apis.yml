@@ -59,11 +59,11 @@ jobs:
       contents: write
     steps:
       - name: Checkout gh-pages Branch (for Allure History)
+        if: always()
         uses: actions/checkout@v4
         with:
-          ref: gh-pages
-          path: gh-pages
-        if: always()
+          ref: gh-pages           
+          path: allure-history       
 
       - name: Download Allure Results Artifact
         if: always()

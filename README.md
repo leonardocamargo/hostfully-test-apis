@@ -62,6 +62,9 @@ hostfully-test-apis/
 
 │   │           └── tests/    # Test cases
 
+│   │           └── utils/    # utilities classes
+
+
 │   └── build/                # Gradle build outputs (including allure-results)
 
 ├── src/test/resources/       # Properties files (qa.properties, dev.properties, etc.)
