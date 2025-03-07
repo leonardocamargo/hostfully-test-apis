@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Validation Error Schema",
+    "type": "object",
+    "required": ["type", "title", "status", "detail", "instance"],
+    "properties": {
+      "type": {
+        "type": "string",
+        "format": "uri"
+      },
+      "title": {
+        "type": "string"
+      },
+      "status": {
+        "type": "integer",
+        "enum": [400]
+      },
+      "detail": {
+        "type": "string"
+      },
+      "instance": {
+        "type": "string"
+      },
+      "errors": {
+        "oneOf": [
+          {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          { "type": "null" }
+        ]
+      }
+    }
+  }
+  
