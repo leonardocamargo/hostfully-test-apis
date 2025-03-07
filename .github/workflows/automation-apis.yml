@@ -7,12 +7,17 @@ on:
         description: 'Environment to run tests (ex: qa, staging, dev)'
         required: true
         default: 'qa'
+
   push:
     branches: [ "main" ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
+    env:
+      ENV: ${{ github.event.inputs.env || 'qa' }}
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -24,12 +29,18 @@ jobs:
           distribution: 'temurin'
 
       - name: Run tests with Gradle
-        run: ./gradlew clean test -Denv=${{ github.event.inputs.env }}
+        run: |
+          echo "Running tests in environment: $ENV"
+          ./gradlew clean test -Denv=$ENV
 
+      # generating allure report
       - name: Generate Allure Report
+        if: always()
         run: ./gradlew allureReport
 
+      # publishing report
       - name: Deploy Allure Report to GitHub Pages
+        if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
