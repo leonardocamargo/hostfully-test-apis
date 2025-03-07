@@ -28,6 +28,12 @@ public class CreatePropertiesTest extends BaseTest {
     public String username;
     public String password;
 
+    @BeforeEach
+    public void beforeEach(){
+        username = envConfig.getUsername();
+        password = envConfig.getPassword();
+    }
+
     @Test
     @DisplayName("Hostfully APis: Create a property with success")
     @Tags({
@@ -36,8 +42,6 @@ public class CreatePropertiesTest extends BaseTest {
     public void createPropertySuccess(){
 
         alias = new AliasUtils().generateRandomAlias();
-        username = envConfig.getUsername();
-        password = envConfig.getPassword();
 
         Properties property = new Properties(alias, "US");
         PropertiesApi propertiesApi =  new PropertiesApi(requestSpec);
@@ -68,8 +72,6 @@ public class CreatePropertiesTest extends BaseTest {
     public void createPropertyDifferentCountryCode(){
 
         alias = new AliasUtils().generateRandomAlias();
-        username = envConfig.getUsername();
-        password = envConfig.getPassword();
 
         Properties property = new Properties(alias, "BR");
         PropertiesApi propertiesApi =  new PropertiesApi(requestSpec);
@@ -100,8 +102,6 @@ public class CreatePropertiesTest extends BaseTest {
     public void attemptCreatePropertyAliasAlreadyExisted(){
 
         alias = new AliasUtils().generateRandomAlias();
-        username = envConfig.getUsername();
-        password = envConfig.getPassword();
 
         Properties property1 = new Properties(alias, "US");
         Properties property2 = new Properties(alias, "US");
@@ -130,10 +130,7 @@ public class CreatePropertiesTest extends BaseTest {
     public void attemptCreatePropertyInvalidCountryCode(){
 
         alias = new AliasUtils().generateRandomAlias();
-        username = envConfig.getUsername();
-        password = envConfig.getPassword();
-
-    
+   
         Properties property = new Properties(alias, "TEST_CODE");
         PropertiesApi propertiesApi =  new PropertiesApi(requestSpec);
         
@@ -155,11 +152,7 @@ public class CreatePropertiesTest extends BaseTest {
     })
     public void attemptCreatePropertyWithoutAlias(){
 
-        username = envConfig.getUsername();
-        password = envConfig.getPassword();
-
-    
-        Properties property = new Properties(alias, "US");
+        Properties property = new Properties(null, "US");
         PropertiesApi propertiesApi =  new PropertiesApi(requestSpec);
         
         Response response = propertiesApi.createProperty(property, username, password);
@@ -185,7 +178,6 @@ public class CreatePropertiesTest extends BaseTest {
         alias = new AliasUtils().generateRandomAlias();
         username = "test";
         password = "test";
-
     
         Properties property = new Properties(alias, "US");
         PropertiesApi propertiesApi =  new PropertiesApi(requestSpec);
@@ -209,8 +201,6 @@ public class CreatePropertiesTest extends BaseTest {
     public void attemptCreatePropertyInvalidURL(){
 
         alias = new AliasUtils().generateRandomAlias();
-        username = envConfig.getUsername();
-        password = envConfig.getPassword();
 
         Properties property = new Properties(alias, "US");
         PropertiesApi propertiesApi =  new PropertiesApi(requestSpec);

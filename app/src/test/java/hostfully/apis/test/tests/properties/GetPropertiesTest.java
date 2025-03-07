@@ -2,7 +2,6 @@ package hostfully.apis.test.tests.properties;
 
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
@@ -88,7 +87,7 @@ public class GetPropertiesTest extends BaseTest{
     @Test
     @DisplayName("Hostfully APis: Attempt to get a property with invalid id (non existent property)")
     @Tags({
-        @Tag("regression"), @Tag("properties"), @Tag("sanity")
+        @Tag("regression"), @Tag("properties")
     })
     public void attemptGetPropertyInvalidId(){
 
@@ -115,7 +114,7 @@ public class GetPropertiesTest extends BaseTest{
     @Test
     @DisplayName("Hostfully APis: Attempt to get a property with id invalid pattern(id or wrong string)")
     @Tags({
-        @Tag("regression"), @Tag("properties"), @Tag("sanity")
+        @Tag("regression"), @Tag("properties")
     })
     public void attemptGetPropertyIdWrongIdStringType(){
 
