@@ -149,5 +149,32 @@ public class CreatePropertiesTest extends BaseTest {
             .time(lessThan(10L), TimeUnit.SECONDS)
             .extract().response();
     }
+
+    @Test
+    @DisplayName("Hostfully APis: Attempt to create a Property without passing an alias")
+    @Tags({
+        @Tag("properties"), @Tag("sanity")
+    })
+    public void attemptCreatePropertyWithoutAlias(){
+
+        dateNow = new DateUtils().getCurrentDate();
+        username = envConfig.getUsername();
+        password = envConfig.getPassword();
+
+    
+        Properties property = new Properties(null, "TEST_CODE");
+        PropertiesApi propertiesApi =  new PropertiesApi(requestSpec);
+        
+        Response response = propertiesApi.createProperty(property, username, password);
+
+        response.then()
+            .statusCode(400)
+            .body("status", equalTo(400))
+            .body("title", equalTo("Validation Error"))
+            .body("detail", equalTo("Validation failed"))
+            .body("errors[0].defaultMessage", equalTo("Property alias is required"))
+            .time(lessThan(10L), TimeUnit.SECONDS)
+            .extract().response();
+    }
     
 }
