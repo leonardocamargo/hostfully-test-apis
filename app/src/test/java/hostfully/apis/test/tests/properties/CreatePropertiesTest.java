@@ -176,11 +176,11 @@ public class CreatePropertiesTest extends BaseTest {
 
 
     @Test
-    @DisplayName("Hostfully APis: Attempt to create a Property with invalid credentials")
+    @DisplayName("Hostfully APis: Attempt to create a Property with wrong credentials")
     @Tags({
         @Tag("properties"), @Tag("sanity"), @Tag("regression")
     })
-    public void attemptCreatePropertyInvalidCredentials(){
+    public void attemptCreatePropertyWrongCredentials(){
 
         alias = new AliasUtils().generateRandomAlias();
         username = "test";

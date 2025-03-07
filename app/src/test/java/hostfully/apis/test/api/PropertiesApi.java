@@ -38,9 +38,9 @@ public class PropertiesApi {
         return given()
             .spec(requestSpec)
             .auth().preemptive().basic(username, password)
-            .pathParam("id", propertyId)
+            .pathParam("propertyId", propertyId)
             .when()
-            .post("/properties")
+            .get("/properties/{propertyId}")
             .then()
             .extract().response();
     }
