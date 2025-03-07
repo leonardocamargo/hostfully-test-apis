@@ -7,11 +7,17 @@ This repository contains automated tests for Hostfully APIs using Java, Rest Ass
 ### Table of Contents
 
 [Overview](#overview)
+
 [Technologies](#technologies)
+
 [Project Structure](#project-structure)
+
 [Environment Configuration](#environment-configuration)
+
 [Running Tests Locally](#running-tests-locally)
+
 [GitHub Actions Workflow](#github-actions-workflow)
+
 [Allure Report](#allure-report)
 
 
@@ -52,11 +58,6 @@ hostfully-test-apis/
 │   └── workflows/            # GitHub Actions workflows
 ├── build.gradle              # Gradle build configuration
 └── README.md                 # This file
-
-
-This text you see here is *actually- written in Markdown! To get a feel
-for Markdown's syntax, type some text into the left window and
-watch the results in the right.
 
 
 ## Environment Configuration
