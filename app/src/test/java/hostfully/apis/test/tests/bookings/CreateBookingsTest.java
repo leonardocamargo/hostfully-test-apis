@@ -77,8 +77,8 @@ public class CreateBookingsTest extends BaseTest {
             .status("SCHEDULED")
             .propertyId(propertyId)
             .guest(Bookings.Guest.builder()
-                .firstName("John")
-                .lastName("Doe")
+                .firstName("Test")
+                .lastName("Leonardo Lima")
                 .dateOfBirth("1995-01-01")
             .build())
     .build();
@@ -120,8 +120,8 @@ public class CreateBookingsTest extends BaseTest {
             .status("COMPLETED")
             .propertyId(propertyId)
             .guest(Bookings.Guest.builder()
-                .firstName("John")
-                .lastName("Doe")
+                .firstName("Test")
+                .lastName("Leonardo Lima")
                 .dateOfBirth("1995-01-01")
             .build())
     .build();
@@ -165,8 +165,8 @@ public class CreateBookingsTest extends BaseTest {
             .status("CANCELLED")
             .propertyId(propertyId)
             .guest(Bookings.Guest.builder()
-                .firstName("John")
-                .lastName("Doe")
+                .firstName("Test")
+                .lastName("Leonardo Lima")
                 .dateOfBirth("1995-01-01")
             .build())
     .build();
@@ -207,8 +207,8 @@ public class CreateBookingsTest extends BaseTest {
             .status("SCHEDULED")
             .propertyId(propertyId)
             .guest(Bookings.Guest.builder()
-                .firstName("John")
-                .lastName("Doe")
+                .firstName("Test")
+                .lastName("Leonardo Lima")
                 .dateOfBirth("1995-01-01")
             .build())
     .build();
@@ -250,8 +250,8 @@ public class CreateBookingsTest extends BaseTest {
             .status("TEST STATUS")
             .propertyId(propertyId)
             .guest(Bookings.Guest.builder()
-                .firstName("John")
-                .lastName("Doe")
+                .firstName("Test")
+                .lastName("Leonardo Lima")
                 .dateOfBirth("1995-01-01")
             .build())
     .build();
@@ -285,8 +285,8 @@ public class CreateBookingsTest extends BaseTest {
             .status("SCHEDULED")
             .propertyId("1ebbdcaa-256b-479c-9a6e-4dd5bbadfbbb")
             .guest(Bookings.Guest.builder()
-                .firstName("John")
-                .lastName("Doe")
+                .firstName("Test")
+                .lastName("Leonardo")
                 .dateOfBirth("1995-01-01")
             .build())
     .build();
@@ -324,8 +324,8 @@ public class CreateBookingsTest extends BaseTest {
             .status("SCHEDULED")
             .propertyId("1ebbdcaa-256b-479c-9a6e-4dd5bbadfbbb")
             .guest(Bookings.Guest.builder()
-                .firstName("John")
-                .lastName("Doe")
+                .firstName("Test")
+                .lastName("Leonardo")
                 .dateOfBirth("1995-01-01")
             .build())
     .build();
@@ -349,9 +349,6 @@ public class CreateBookingsTest extends BaseTest {
         @Tag("regression"), @Tag("bookings"), @Tag("sanity")
     })
     public void attemptCreateBookingEndDateBeforeStartDate(){
-
-        username = "test";
-        password = "test";
        
         startDate = dateUtils.getFutureDate(4);
         endDate = dateUtils.getFutureDate(1);
@@ -360,10 +357,10 @@ public class CreateBookingsTest extends BaseTest {
             .startDate(startDate)
             .endDate(endDate)
             .status("SCHEDULED")
-            .propertyId("1ebbdcaa-256b-479c-9a6e-4dd5bbadfbbb")
+            .propertyId(propertyId)
             .guest(Bookings.Guest.builder()
-                .firstName("John")
-                .lastName("Doe")
+                .firstName("Test")
+                .lastName("Leonardo")
                 .dateOfBirth("1995-01-01")
             .build())
     .build();
@@ -396,7 +393,7 @@ public class CreateBookingsTest extends BaseTest {
             .propertyId(propertyId)
             .guest(Guest.builder()
                 .firstName(null)  
-                .lastName("Doe")
+                .lastName("Leonardo")
                 .dateOfBirth("1995-01-01")
                 .build())
             .build();
@@ -431,7 +428,7 @@ public class CreateBookingsTest extends BaseTest {
             .status("SCHEDULED")
             .propertyId(propertyId)
             .guest(Guest.builder()
-                .firstName("Joe")  
+                .firstName("Test")  
                 .lastName(null)
                 .dateOfBirth("1995-01-01")
                 .build())
@@ -467,8 +464,8 @@ public class CreateBookingsTest extends BaseTest {
             .status("SCHEDULED")
             .propertyId(propertyId)
             .guest(Guest.builder()
-                .firstName("Joe")  
-                .lastName("Test")
+                .firstName("Test")  
+                .lastName("Leonardo")
                 .dateOfBirth(null)
                 .build())
             .build();
@@ -502,8 +499,8 @@ public class CreateBookingsTest extends BaseTest {
             .status("SCHEDULED")
             .propertyId(propertyId)
             .guest(Guest.builder()
-                .firstName("Joe")  
-                .lastName("Test")
+                .firstName("Test")  
+                .lastName("Leonardo")
                 .dateOfBirth("1995-01-01")
                 .build())
             .build();
@@ -516,7 +513,7 @@ public class CreateBookingsTest extends BaseTest {
             .body("status", equalTo(400))
             .body("title", equalTo("Validation Error"))
             .body("detail", equalTo("Validation failed"))
-            .body("errors[0].defaultMessage", equalTo("Booking end date must be supplied"))
+            .body("errors[0].defaultMessage", equalTo("Booking start date must be supplied"))
             .time(lessThan(10L), TimeUnit.SECONDS)
             .extract().response();
         
@@ -537,8 +534,8 @@ public class CreateBookingsTest extends BaseTest {
             .status("SCHEDULED")
             .propertyId(propertyId)
             .guest(Guest.builder()
-                .firstName("Joe")  
-                .lastName("Test")
+                .firstName("Test")  
+                .lastName("Leonardo")
                 .dateOfBirth(null)
                 .build())
             .build();
@@ -551,7 +548,7 @@ public class CreateBookingsTest extends BaseTest {
             .body("status", equalTo(400))
             .body("title", equalTo("Validation Error"))
             .body("detail", equalTo("Validation failed"))
-            .body("errors[0].defaultMessage", equalTo("Booking start date must be supplied"))
+            .body("errors[0].defaultMessage", equalTo("Booking end date must be supplied"))
             .time(lessThan(10L), TimeUnit.SECONDS)
             .extract().response();
         
@@ -573,8 +570,8 @@ public class CreateBookingsTest extends BaseTest {
             .status("SCHEDULED")
             .propertyId(propertyId)
             .guest(Guest.builder()
-                .firstName("Joe")  
-                .lastName("Test")
+                .firstName("Test")  
+                .lastName("Leonardo Lima")
                 .dateOfBirth("1995-01-01")
                 .build())
             .build();
@@ -609,8 +606,8 @@ public class CreateBookingsTest extends BaseTest {
             .status("SCHEDULED")
             .propertyId(propertyId) 
             .guest(Bookings.Guest.builder()
-                    .firstName("John")
-                    .lastName("Doe")
+                    .firstName("Test")
+                    .lastName("Leonardo Lima")
                     .dateOfBirth("1995-01-01")
                     .build())
             .build();
@@ -629,8 +626,8 @@ public class CreateBookingsTest extends BaseTest {
             .status("SCHEDULED")
             .propertyId(propertyId)
             .guest(Bookings.Guest.builder()
-                    .firstName("Alice")
-                    .lastName("Smith")
+                    .firstName("Test")
+                    .lastName("Leonardo Lima Overlapping")
                     .dateOfBirth("1990-02-02")
                     .build())
             .build();
