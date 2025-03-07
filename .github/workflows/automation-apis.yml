@@ -53,6 +53,7 @@ jobs:
           path: app/build/allure-results
 
   deploy:
+    if: always()     # garante que o job rodará mesmo se os jobs anteriores falharem
     runs-on: ubuntu-latest
     needs: test 
     permissions:
