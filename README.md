@@ -42,23 +42,38 @@ The Hostfully Test APIs project is designed to validate Hostfully API endpoints 
 
 
 ## Project Structure 
+```
 hostfully-test-apis/
-├── app/                    
-│   ├── src/
-│   │   ├── main/
-│   │   │   └── java/         # Application code (if any)
-│   │   └── test/
-│   │       └── java/         # Automated tests
-│   │           ├── base/     # BaseTest class with shared configurations
-│   │           ├── pojos/    # POJOs to map JSON responses
-│   │           └── tests/    # Test cases
-│   └── build/                # Gradle build outputs (including allure-results)
-├── src/test/resources/       # Properties files (qa.properties, dev.properties, etc.)
-├── .github/
-│   └── workflows/            # GitHub Actions workflows
-├── build.gradle              # Gradle build configuration
-└── README.md                 # This file
+├── app/  
 
+│   ├── src/
+
+│   │   ├── main/
+
+│   │   │   └── java/         # Application code (if any)
+
+│   │   └── test/
+
+│   │       └── java/         # Automated tests
+
+│   │           ├── base/     # BaseTest class with shared configurations
+
+│   │           ├── pojos/    # POJOs to map JSON responses
+
+│   │           └── tests/    # Test cases
+
+│   └── build/                # Gradle build outputs (including allure-results)
+
+├── src/test/resources/       # Properties files (qa.properties, dev.properties, etc.)
+
+├── .github/
+
+│   └── workflows/            # GitHub Actions workflows
+
+├── build.gradle              # Gradle build configuration
+
+└── README.md                 # This file
+```
 
 ## Environment Configuration
 
