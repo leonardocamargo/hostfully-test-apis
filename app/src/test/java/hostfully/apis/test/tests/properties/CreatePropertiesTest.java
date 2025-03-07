@@ -7,12 +7,15 @@ import static org.hamcrest.number.OrderingComparison.lessThan;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
+import hostfully.apis.test.api.PropertiesApi;
 import hostfully.apis.test.base.BaseTest;
 import hostfully.apis.test.pojos.Properties;
 import hostfully.apis.test.utils.AliasUtils;
 import hostfully.apis.test.utils.CustomTestWatcher;
 import hostfully.apis.test.utils.DateUtils;
-import io.restassured.*;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.*;
 
 @ExtendWith(CustomTestWatcher.class)
@@ -35,23 +38,25 @@ public class CreatePropertiesTest extends BaseTest {
         username = envConfig.getUsername();
         password = envConfig.getPassword();
 
-        Properties property = new Properties(alias, "US",dateNow);
+        Properties property = new Properties(alias, "US");
+        PropertiesApi propertiesApi =  new PropertiesApi(requestSpec);
 
-        Response response = RestAssured.given()
-            .spec(requestSpec)
-            //we need to pass preemptive because the api doesnt return a challenge, requiring the basic auth in the first request
-            .auth().preemptive().basic(username, password)
-            .body(property)
-            .log().all()
-            .when()
-            .post("/properties")
-            .then()
+        Response response = propertiesApi.createProperty(property, username, password);
+        
+        response.then()
             .statusCode(201)
+            validating the schema
+            .body(matchesJsonSchemaInClasspath("schemas/property.json"))
             .body("alias", equalTo(property.getAlias()))
+            .body("countryCode", equalTo(property.getCountryCode()))
             .time(lessThan(10L), TimeUnit.SECONDS)
             .extract().response();
 
+            JsonPath jsonPath = response.jsonPath();
 
+            Assertions.assertNotNull(jsonPath.get("id"));
+            Assertions.assertNotNull(jsonPath.get("createdAt"));
+        
     }
 
     

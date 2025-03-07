@@ -13,7 +13,4 @@ public class Properties {
     
     private String alias;
     private String countryCode;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private String createdAt;
 }
