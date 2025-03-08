@@ -7,7 +7,6 @@ import static org.hamcrest.number.OrderingComparison.lessThan;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 import hostfully.apis.test.api.PropertiesApi;
@@ -15,7 +14,6 @@ import hostfully.apis.test.base.BaseTest;
 import hostfully.apis.test.pojos.Properties;
 import hostfully.apis.test.utils.AliasUtils;
 import hostfully.apis.test.utils.CustomTestWatcher;
-import hostfully.apis.test.utils.DateUtils;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.*;

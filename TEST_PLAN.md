@@ -106,7 +106,7 @@ Total Scenarios: **4**
 **Expected Outcome:** Response status code 401 (Unauthorized).
 
 #### C. Bookings Endpoint (/post bookings)
-Total Scenarios: **15**
+Total Scenarios: **16**
 
 **Create a Booking with Success (SCHEDULED Status)**
 
@@ -182,6 +182,11 @@ Total Scenarios: **15**
 
 **Objective:** Validate that the API does not allow overlapping bookings for the same property.
 **Expected Outcome:** Response status code 409 (Conflict) with an error message such as "Booking dates overlap with an existing booking."
+
+**Attempt to create a booking in the past**
+
+**Objective:** Validate that the API does not allow create bookings in the past
+**Expected Outcome:** Response status code 400 (Bad Request) with an error message such as "Invalid booking dates: dates in the past"
 
 #### Additional Comments
 

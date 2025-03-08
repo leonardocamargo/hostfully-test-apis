@@ -4,11 +4,10 @@ import static io.restassured.RestAssured.given;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import hostfully.apis.test.pojos.Bookings;
-import hostfully.apis.test.pojos.Properties;
 
 
 /**
- * This class encapsulates API calls related to "Properties".
+ * This class encapsulates API calls related to "Bookings".
  * Instead of extending BaseTest, we use composition by receiving a pre-configured
  * RequestSpecification (from BaseTest) via the constructor. This avoids duplicating
  * the common configuration (baseUri, headers, filters, etc.) and ensures that the
@@ -26,6 +25,7 @@ public class BookingsApi {
 
     public Response createBooking(Bookings booking, String propertyId, String username, String password) {
         return given()
+            .log().all()
             .spec(requestSpec)
             .auth().preemptive().basic(username, password)
             .body(booking)

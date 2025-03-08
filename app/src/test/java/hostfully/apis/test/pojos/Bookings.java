@@ -1,7 +1,5 @@
 package hostfully.apis.test.pojos;
 
-import java.time.LocalDate;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;

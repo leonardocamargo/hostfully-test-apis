@@ -641,4 +641,40 @@ public class CreateBookingsTest extends BaseTest {
             .time(lessThan(10L), TimeUnit.SECONDS);
     }
 
+    @Test
+    @DisplayName("Hostfully APIs: Attempt to create a booking in the past")
+    @Tags({ @Tag("regression"), @Tag("bookings"), @Tag("sanity") })
+    public void attemptCreateBookingInPast() {
+        
+        String pastDate = dateUtils.getPastDate(1); 
+
+        Bookings bookings = Bookings.builder()
+            .startDate(pastDate)
+            .endDate(pastDate)
+            .status("SCHEDULED")
+            .propertyId(propertyId)
+            .guest(Guest.builder()
+                .firstName("Test")
+                .lastName("Booking Past")
+                .dateOfBirth("1995-01-01")
+                .build())
+            .build();
+
+        BookingsApi bookingsApi = new BookingsApi(requestSpec);
+        Response response = bookingsApi.createBooking(bookings, propertyId, username, password);
+        
+        response.then()
+            .statusCode(400)
+            .body("status", equalTo(400))
+            .body("title", equalTo("Validation Error"))
+            .body("detail", equalTo("Validation failed"))
+            .body("errors[0].defaultMessage", equalTo("Booking date invalid: Cannot create booking in the past."))
+            .time(lessThan(10L), TimeUnit.SECONDS)
+            .extract().response();
+        
+        JsonPath jsonPath = response.jsonPath();
+        assertNotNull(jsonPath.get("errors"));
+    }
+
+
 }
